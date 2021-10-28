@@ -18,3 +18,17 @@ var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
 });
 
 streetmap.addTo(myMap);
+
+//GeoJSON URL
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+d3.json(queryUrl, function(data) {
+    
+    L.geoJson(data, {
+  
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("<br>Location: " + feature.properties.place);
+  
+      }
+}).addTo(myMap);
+
+})
