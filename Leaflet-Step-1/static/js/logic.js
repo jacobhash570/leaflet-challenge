@@ -61,7 +61,7 @@ d3.json(queryUrl, function(data) {
         return mag * 5;
       }
     
-    //Add to map
+    // Add to map
     L.geoJson(data, {
 
         pointToLayer: function(feature, lat_lng) {
@@ -75,5 +75,29 @@ d3.json(queryUrl, function(data) {
   
       }
     }).addTo(myMap);
+
+    // Legend 
+    var legend = L.control({
+        position: "bottomright"
+      });
+    
+      legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "info legend");
+    
+        var grades = [0, 1, 2, 3, 4, 5];
+        var colors = ["#2c99ea", "#2ceabf", "#92ea2c", "#d5ea2c","#eaa92c", "#ea2c2c"];
+    
+    
+        // Loop for colors
+        for (var i = 0; i<grades.length; i++) {
+          div.innerHTML +=
+          "<i style='background: " + colors[i] + "'></i> " +
+          grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+        }
+        return div;
+    
+      };
+    
+      legend.addTo(myMap)
 
 })
